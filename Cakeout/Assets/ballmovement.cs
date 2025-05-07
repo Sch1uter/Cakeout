@@ -9,7 +9,7 @@ public class BallMovement3D : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; 
+        rb.useGravity = false;
     }
 
     void Update()
@@ -22,16 +22,16 @@ public class BallMovement3D : MonoBehaviour
 
     void LaunchBall()
     {
-      
+
         Vector3 initialDirection = new Vector3(Random.Range(-1f, 1f), 0f, Random.Range(-1f, 1f)).normalized;
         rb.velocity = initialDirection * speed;
         isLaunched = true;
     }
-
-    void FixedUpdate()
+    private void OnCollisionEnter(Collision collision)
     {
-        Vector3 velocity = rb.velocity;
-        velocity.y = 0f;
-        rb.velocity = velocity;
+        if (collision.gameObject.tag == "destroy")
+            Destroy(collision.gameObject);
     }
+   
+   
 }
